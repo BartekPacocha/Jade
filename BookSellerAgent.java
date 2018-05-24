@@ -93,7 +93,7 @@ public class BookSellerAgent extends Agent {
 			public void action() {
 				//dodanie do katalogu rekordu w postaci ³¹czonego String
 				catalogue.put(title+size+type, new Integer(price));	
-				System.out.println(title+" inserted into catalogue. Size = "+size+" GB. Type is "+type+" .Price = "+price);
+				System.out.println(title+" inserted into catalogue. Size = "+size+" . Type is "+type+" .Price = "+price);
 			}
 		} );
 	}

@@ -46,14 +46,37 @@ class BookSellerGui extends JFrame {
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(4, 2));
 		p.add(new JLabel("Memory brand:"));
-		titleField = new JTextField(15);
-		p.add(titleField);
+		
+		String[] brandNames = new String[] {"Kingston", "ADATA", "Samsung", "Sony", "GOODRAM"};
+		String[] memorySizes = new String[] {"2 GB", "4 GB", "8 GB", "16 GB"};
+		String[] memoryType = new String[] {"DDR4", "DDR3", "DDR2"};
+		
+		JComboBox<String> brandListBox = new JComboBox<>(brandNames);
+		//add(brandListBox);
+		p.add(brandListBox);
+		String selectedBrand = (String) brandListBox.getSelectedItem();
+
+		//titleField = new JTextField(15);
+		//p.add(titleField);
 		p.add(new JLabel("Memory Size:"));
-		sizeField = new JTextField(15);
-		p.add(sizeField);
+		//sizeField = new JTextField(15);
+		//p.add(sizeField);
+		
+		JComboBox<String> memorySizeBox = new JComboBox<>(memorySizes);
+		p.add(memorySizeBox);
+		String selectedMemory = (String) memorySizeBox.getSelectedItem();
+		
+		
+		
 		p.add(new JLabel("Memory Type:"));
-		typeField = new JTextField(15);
-		p.add(typeField);
+		//typeField = new JTextField(15);
+		//p.add(typeField);
+		
+		JComboBox<String> memoryTypeBox = new JComboBox<>(memoryType);
+		p.add(memoryTypeBox);
+		String selectedType= (String) memoryTypeBox.getSelectedItem();
+		
+		
 		p.add(new JLabel("Price:"));
 		priceField = new JTextField(15);
 		p.add(priceField);
@@ -64,15 +87,18 @@ class BookSellerGui extends JFrame {
 		addButton.addActionListener( new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					String title = titleField.getText().trim();
+					//String title = titleField.getText().trim();
+					String title = (String) brandListBox.getSelectedItem().toString().trim();
 					String price = priceField.getText().trim();
-					String size = sizeField.getText().trim();
-					String type = typeField.getText().trim();					
+					//String size = sizeField.getText().trim();
+					String size = (String) memorySizeBox.getSelectedItem().toString().trim();
+					//String type = typeField.getText().trim();
+					String type = (String) memoryTypeBox.getSelectedItem().toString().trim();
 					myAgent.updateCatalogue(title,size,type, Integer.parseInt(price));
-					titleField.setText("");
+					//titleField.setText("");
 					priceField.setText("");
-					sizeField.setText("");
-					typeField.setText("");
+					//sizeField.setText("");
+					//typeField.setText("");
 				}
 				catch (Exception e) {
 					JOptionPane.showMessageDialog(BookSellerGui.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
