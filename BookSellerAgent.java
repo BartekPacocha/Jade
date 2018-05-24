@@ -36,19 +36,13 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class BookSellerAgent extends Agent {
-	// The catalogue of books for sale (maps the title of a book to its price)
 	@SuppressWarnings("rawtypes")
-//	private ArrayList catalogue;
-	private Hashtable catalogue;
-	// The GUI by means of which the user can add books in the catalogue
-	private BookSellerGui myGui;
+	private Hashtable catalogue;		//katalog typu Hashtable
+	private BookSellerGui myGui;		//uruchomienie GUI
 
-	// Put agent initializations here
 	@SuppressWarnings("rawtypes")
 	protected void setup() {
-		// Create the catalogue
-		catalogue = new Hashtable();
-//		catalogue = new ArrayList<String>();
+		catalogue = new Hashtable();	//tworzenie katalogu Hashtable
 
 		// Create and show the GUI 
 		myGui = new BookSellerGui(this);
@@ -93,15 +87,13 @@ public class BookSellerAgent extends Agent {
 	/**
      This is invoked by the GUI when the user adds a new book for sale
 	 */
-	public void updateCatalogue(final String title,final String size, final int price) {
+	public void updateCatalogue(final String title,final String size,final String type, final int price) {
 		addBehaviour(new OneShotBehaviour() {
 			@SuppressWarnings("unchecked")
 			public void action() {
-				catalogue.put(title+size, new Integer(price));
-	//			catalogue.add(title);
-	//			catalogue.add(size);
-	//			catalogue.add(price);
-				System.out.println(title+" inserted into catalogue. Size = "+size+" GB. Price = "+price);
+				//dodanie do katalogu rekordu w postaci ³¹czonego String
+				catalogue.put(title+size+type, new Integer(price));	
+				System.out.println(title+" inserted into catalogue. Size = "+size+" GB. Type is "+type+" .Price = "+price);
 			}
 		} );
 	}

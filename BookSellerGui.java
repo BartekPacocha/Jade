@@ -36,7 +36,7 @@ import javax.swing.*;
 class BookSellerGui extends JFrame {	
 	private BookSellerAgent myAgent;
 	
-	private JTextField titleField, priceField, sizeField;
+	private JTextField titleField, priceField, sizeField, typeField;
 	
 	BookSellerGui(BookSellerAgent a) {
 		super(a.getLocalName());
@@ -44,13 +44,16 @@ class BookSellerGui extends JFrame {
 		myAgent = a;
 		
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(3, 3));
+		p.setLayout(new GridLayout(4, 2));
 		p.add(new JLabel("Memory brand:"));
 		titleField = new JTextField(15);
 		p.add(titleField);
 		p.add(new JLabel("Memory Size:"));
 		sizeField = new JTextField(15);
 		p.add(sizeField);
+		p.add(new JLabel("Memory Type:"));
+		typeField = new JTextField(15);
+		p.add(typeField);
 		p.add(new JLabel("Price:"));
 		priceField = new JTextField(15);
 		p.add(priceField);
@@ -64,10 +67,12 @@ class BookSellerGui extends JFrame {
 					String title = titleField.getText().trim();
 					String price = priceField.getText().trim();
 					String size = sizeField.getText().trim();
-					myAgent.updateCatalogue(title,size, Integer.parseInt(price));
+					String type = typeField.getText().trim();					
+					myAgent.updateCatalogue(title,size,type, Integer.parseInt(price));
 					titleField.setText("");
 					priceField.setText("");
 					sizeField.setText("");
+					typeField.setText("");
 				}
 				catch (Exception e) {
 					JOptionPane.showMessageDialog(BookSellerGui.this, "Invalid values. "+e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 

@@ -38,25 +38,27 @@ public class BookBuyerAgent extends Agent {
 	// The title of the book to buy
 	private String targetBookTitle;
 	private String targetSize;
+	private String targetType;
 	// The list of known seller agents
 	private AID[] sellerAgents;
 
 	// Put agent initializations here
 	protected void setup() {
 		// Printout a welcome message
-		System.out.println("Hallo! Buyer-agent "+getAID().getName()+" is ready.");
+		System.out.println("Herro! Buyer-agent "+getAID().getName()+" is ready.");
 
-		// Get the title of the book to buy as a start-up argument
+		// Pobranie informacji o koœci pamiêci
 		Object[] args = getArguments();
 		if (args != null && args.length > 0) {
-			targetBookTitle = (String) args[0];
-			targetSize = (String) args[1];
-			System.out.println("Target memory is "+targetBookTitle+ " with size of "+targetSize+" GB.");
+			targetBookTitle = (String) args[0];  // Marka koœci z argumentu funkcji
+			targetSize = (String) args[1];		//Rozmiar koœci z argumentu funkcji
+			targetType = (String) args[2];		//Rodzaj koœci z argumentu funkcji
+			System.out.println("Target memory is "+targetBookTitle+ " with size of "+targetSize+" GB and "+targetType+" type");
 
 			// Add a TickerBehaviour that schedules a request to seller agents every minute
 			addBehaviour(new TickerBehaviour(this, 6000) {
 				protected void onTick() {
-					System.out.println("Trying to buy "+targetBookTitle+" with size of " + targetSize+" GB.");
+					System.out.println("Trying to buy "+targetBookTitle+" with size of " + targetSize+" GB and "+targetType+" type");
 					// Update the list of seller agents
 					DFAgentDescription template = new DFAgentDescription();
 					ServiceDescription sd = new ServiceDescription();
@@ -113,7 +115,7 @@ public class BookBuyerAgent extends Agent {
 				for (int i = 0; i < sellerAgents.length; ++i) {
 					cfp.addReceiver(sellerAgents[i]);
 				} 
-				cfp.setContent(targetBookTitle+targetSize);
+				cfp.setContent(targetBookTitle+targetSize+targetType);
 				cfp.setConversationId("book-trade");
 				cfp.setReplyWith("cfp"+System.currentTimeMillis()); // Unique value
 				myAgent.send(cfp);
@@ -150,7 +152,7 @@ public class BookBuyerAgent extends Agent {
 				// Send the purchase order to the seller that provided the best offer
 				ACLMessage order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
 				order.addReceiver(bestSeller);
-				order.setContent(targetBookTitle+targetSize);
+				order.setContent(targetBookTitle+targetSize+targetType);
 				order.setConversationId("book-trade");
 				order.setReplyWith("order"+System.currentTimeMillis());
 				myAgent.send(order);
